@@ -1,0 +1,35 @@
+{
+  "configurations": [
+    {
+      "name": "Visual Micro",
+      "intelliSenseMode": "msvc-x64",
+      "includePath": [
+        "${projectRoot}..\\ArduinoGeekDigitalClock",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src",
+        "C:\\Program Files (x86)\\Arduino\\libraries\\DS3231\\src",
+        "C:\\Program Files (x86)\\Arduino\\libraries\\Adafruit_NeoPixel",
+        "C:\\Users\\Bruno\\Documents\\Arduino\\libraries\\libraries",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src\\utility",
+        "C:\\Program Files (x86)\\Arduino\\libraries",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\eightanaloginputs",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\include\\",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\include\\avr\\",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.8.1\\include",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include",
+        "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.3\\include"
+      ],
+      "defines": [
+        "__AVR_ATmega328p__",
+        "__AVR_ATmega328P__",
+        "F_CPU=16000000L",
+        "ARDUINO=10804",
+        "ARDUINO_AVR_PRO",
+        "ARDUINO_ARCH_AVR",
+        "__cplusplus=201103L",
+        "_VMICRO_INTELLISENSE"
+      ]
+    }
+  ]
+}
