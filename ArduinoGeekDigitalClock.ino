@@ -4,7 +4,7 @@
 
 #include "var.h"
 #include <Wire.h>
-#include "DS3231Access.h"
+#include "libDS3231.h"
 #include <Adafruit_NeoPixel.h>
 //#ifdef __AVR__
 //#include <avr/power.h>
@@ -23,17 +23,17 @@ uint32_t color_seconde = pixels_hour.Color(255, 127, 0, GAMMA);
 uint32_t color_dixseconde = pixels_hour.Color(255, 0, 0, GAMMA);
 
 int delayval = 0;
-int hour, minute, seconde, dixseconde;
 int pix_hour, pix_minute, pix_seconde, pix_dixseconde, lastpix_dixseconde;
 unsigned long startmillis;
 
-DS3231Access rtc;
+libDS3231 rtc;
+RtcDateTime now;
 
 void setup() {
-//#if defined (__AVR_ATtiny85__)
-//	if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-//#endif
-	//Init RTC
+	//#if defined (__AVR_ATtiny85__)
+	//	if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+	//#endif
+		//Init RTC
 	rtc.init();
 	startmillis = millis();
 
@@ -47,24 +47,27 @@ void setup() {
 }
 
 void loop() {
-	rtc.getTime(&hour, &minute, &seconde);
+	now = rtc.getDateTime();
 
 	// Calculation
-	pix_hour = hour;
-	pix_minute = abs(minute / (60.0 / NBPIXELS_MINUTE));
-	pix_seconde = abs(seconde / (60.0 / NBPIXELS_SECONDE));
-	pix_dixseconde = abs((((millis() - startmillis)/17) % 60) / (60.0 / NBPIXELS_DIXSECONDE));
+	if (now.Hour() > 12)
+		pix_hour = now.Hour() - 12;
+	else
+		pix_hour = now.Hour();
+	pix_minute = abs(now.Minute() / (60.0 / NBPIXELS_MINUTE));
+	pix_seconde = abs(now.Second() / (60.0 / NBPIXELS_SECONDE));
+	pix_dixseconde = abs((((millis() - startmillis) / 17) % 60) / (60.0 / NBPIXELS_DIXSECONDE));
 
 	// Display Hour
 	pixels_hour.setPixelColor(pix_hour, color_hour);
-	if (hour > 0)
+	if (now.Hour() > 0)
 		pixels_hour.setPixelColor(pix_hour - 1, 0);
 	else
 		pixels_hour.setPixelColor(NBPIXELS_HOUR - 1, 0);
 
 	// Display minute
 	pixels_minute.setPixelColor(pix_minute, color_minute);
-	if (minute > 0 && (pix_minute - 1 != pix_seconde))
+	if (now.Minute() > 0 && (pix_minute - 1 != pix_seconde))
 		pixels_minute.setPixelColor(pix_minute - 1, 0);
 	else
 		pixels_minute.setPixelColor(NBPIXELS_MINUTE - 1, 0);
@@ -72,18 +75,18 @@ void loop() {
 	// Display second
 	if (pix_seconde != pix_minute)
 		pixels_minute.setPixelColor(pix_seconde, color_seconde);
-	if (seconde > 0 && (pix_seconde - 1 != pix_minute))
+	if (now.Second() > 0 && (pix_seconde - 1 != pix_minute))
 		pixels_minute.setPixelColor(pix_seconde - 1, 0);
 	else
 		pixels_minute.setPixelColor(NBPIXELS_SECONDE - 1, 0);
-	
+
 	// Display dixsecond
 	if (lastpix_dixseconde != pix_seconde && (lastpix_dixseconde != pix_minute))
 		pixels_minute.setPixelColor(lastpix_dixseconde, 0);
 	if (pix_dixseconde != pix_seconde && (pix_dixseconde != pix_minute))
 		pixels_minute.setPixelColor(pix_dixseconde, color_dixseconde);
 	lastpix_dixseconde = pix_dixseconde;
-	
+
 	pixels_hour.show();
 	pixels_minute.show();
 	delay(delayval);
