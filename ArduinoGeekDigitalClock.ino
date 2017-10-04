@@ -16,13 +16,14 @@ unsigned long startmillis;
 
 libDS3231 rtc;
 RtcDateTime now;
-int color = 0, mode = 0;
-boolean bfm_mode = false, bfm_color = false;
+int color = 0, mode = 0, light = 55;
+boolean bfm_mode = false, bfm_color = false, bfm_light = false;
 
 // Color
-int colorTable[3][4][3] = { { { 0,0,255 }, { 0,0,255 }, { 220,0,255 }, { 200,0,0 } },
-							{ { 255,45,0 }, { 255,45,0 }, { 255,200,0 }, { 0,200,0 } },
-							{ { 255, 0, 0 }, { 255,0,0 }, { 255,45,0 }, { 0,0,200 } } };
+int colorTable[4][4][3] = { { { 0,0,255 }, { 0,0,255 }, { 220,0,255 }, { 255,40,40 } },
+							{ { 255,45,0 }, { 255,45,0 }, { 255,200,0 }, { 40,255,40 } },
+							{ { 0,255,45 }, { 0,255,45 }, { 0,200,200 }, { 150,150,0 } },
+							{ { 255, 0, 0 }, { 255,0,0 }, { 255,45,0 }, { 255,0,255 } } };
 uint32_t color_hour;
 uint32_t color_minute;
 uint32_t color_seconde;
@@ -41,16 +42,17 @@ void setup() {
 
 	pinMode(PIN_MODE, INPUT);
 	pinMode(PIN_COLOR, INPUT);
+	pinMode(PIN_LIGHT, INPUT);
 
 	setColor(color);
 	rtc.init();
 	startmillis = millis();
 
 	// Init NeoPixel
-	pixels_hour.setBrightness(BRIGHTNESS_HOUR);
+	pixels_hour.setBrightness(light);
 	pixels_hour.begin();
 	pixels_hour.show();
-	pixels_minute.setBrightness(BRIGHTNESS_MINUTE);
+	pixels_minute.setBrightness(light);
 	pixels_minute.begin();
 	pixels_minute.show();
 }
@@ -61,6 +63,8 @@ void setup() {
 void loop() {
 	readInput();
 	setColor(color);
+	setBrightness(light);
+
 	now = rtc.getDateTime();
 
 	// Calculation
@@ -130,11 +134,21 @@ void readInput()
 	if (digitalRead(PIN_COLOR) == HIGH && !bfm_color) {
 		bfm_color = true;
 		color += 1;
-		if (color > 2)
+		if (color > 3)
 			color = 0;
 	}
 	if (digitalRead(PIN_COLOR) == LOW)
 		bfm_color = false;
+
+	//Load input light 
+	if (digitalRead(PIN_LIGHT) == HIGH && !bfm_light) {
+		bfm_light = true;
+		light += 20;
+		if (light > 255)
+			light = 10;
+	}
+	if (digitalRead(PIN_LIGHT) == LOW)
+		bfm_light = false;
 }
 
 //
@@ -148,3 +162,11 @@ void setColor(int col)
 	color_dixseconde = pixels_hour.Color(colorTable[col][3][0], colorTable[col][3][1], colorTable[col][3][2], GAMMA);
 }
 
+//
+// setBrightness
+//
+void setBrightness(int light)
+{
+	pixels_hour.setBrightness(light);
+	pixels_minute.setBrightness(light);
+}
