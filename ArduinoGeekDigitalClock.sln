@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoGeekDigitalClock", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoLibraries", "..\..\ArduinoLibraries\ArduinoLibraries.vcxitems", "{1B7FCBD7-384F-4893-9701-5F085C6FD390}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7EBF890E-F22C-4417-9514-C3D53B3F9099}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\ArduinoLibraries\ArduinoLibraries.vcxitems*{1b7fcbd7-384f-4893-9701-5f085c6fd390}*SharedItemsImports = 9

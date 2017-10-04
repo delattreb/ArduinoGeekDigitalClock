@@ -24,5 +24,5 @@
 #define GAMMA 0
 
 // PIN
-#define PIN_MODE 2
-#define PIN_COLOR 3
+#define PIN_MODE 7
+#define PIN_COLOR 8
