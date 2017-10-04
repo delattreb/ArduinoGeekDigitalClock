@@ -22,3 +22,7 @@
 #define BRIGHTNESS_DIXSECONDE 50
 
 #define GAMMA 0
+
+// PIN
+#define PIN_MODE 2
+#define PIN_COLOR 3
