@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include "var.h"
 #include "libDS3231.h"
-#include "Adafruit_NeoPixel.h"
+#include "libAdafruitNeoPixel.h"
 
 // Var
 Adafruit_NeoPixel pixels_hour = Adafruit_NeoPixel(NBPIXELS_HOUR, PIN_HOUR, NEO_GRB + NEO_KHZ800);
