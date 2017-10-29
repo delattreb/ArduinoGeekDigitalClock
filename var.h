@@ -1,7 +1,7 @@
 
 
-#define DEBUG
-#define INFO
+//#define DEBUG
+//#define INFO
 #define BAUDS_RATE 115200
 
 #define NBREMANANCE	4

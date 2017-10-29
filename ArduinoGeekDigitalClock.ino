@@ -68,7 +68,7 @@ void loop() {
 	now = rtc.getDateTime();
 
 	// Calculation
-	if (now.Hour() > 12)
+	if (now.Hour() >= 12)
 		pix_hour = now.Hour() - 12;
 	else
 		pix_hour = now.Hour();
